@@ -24,13 +24,27 @@
 
   fileSystems."/mnt/r" = {
     device = "/dev/disk/by-label/ReallyBigDrive";
-    fsType = "ntfs";
+    fsType = "ntfs-3g";
     noCheck = true;
     neededForBoot = false;
     options = [ "umask=000" ];
   };
 
+  fileSystems."/mnt/f" = {
+    device = "/dev/disk/by-label/Files";
+    fsType = "ntfs-3g";
+    noCheck = true;
+    neededForBoot = false;
+    options = [ "umask=000" "noauto" ];
+  };
 
+  fileSystems."/mnt/m" = {
+    device = "/dev/disk/by-label/Media";
+    fsType = "ntfs-3g";
+    noCheck = true;
+    neededForBoot = false;
+    options = [ "umask=000" "noauto" ];
+  };
 
   swapDevices = [ ];
 
