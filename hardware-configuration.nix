@@ -27,6 +27,7 @@
     fsType = "ntfs";
     noCheck = true;
     neededForBoot = false;
+    options = [ "umask = 000" ];
   };
 
 
