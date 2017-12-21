@@ -47,7 +47,18 @@
     kate yakuake
     firefox-bin
     tdesktop weechat
+    amarok vlc streamlink
+    virtualbox
   ];
+
+  # Fish!
+  programs.fish.enable = true;
+
+  # Web browser addons
+#  pkgs.firefox-bin = {
+#    enableGoogleTalkPlugin = true;
+#    enableAdobeFlash = true;
+#  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -88,6 +99,9 @@
   # Enable PulseAudio
   hardware.pulseaudio.enable = true;
 
+  # Enable VirtualBox
+  virtualisation.virtualbox.host.enable = true;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   # users.extraUsers.guest = {
   #   isNormalUser = true;
@@ -97,7 +111,7 @@
   # user Ben
   users.users.ben = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" ];
+    extraGroups = [ "wheel" "networkmanager" "vboxusers" ];
   };
 
   # This value determines the NixOS release with which your system is to be
