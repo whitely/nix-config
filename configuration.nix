@@ -43,8 +43,9 @@
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
-    wget vim plasma-nm git
-    kate yakuake
+    wget vim git file
+    plasma-nm
+    kate yakuake tmux
     firefox-bin
     tdesktop weechat
     amarok vlc streamlink
