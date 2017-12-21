@@ -48,7 +48,6 @@
     firefox-bin
     tdesktop weechat
     amarok vlc streamlink
-    virtualbox
   ];
 
   # Fish!
@@ -112,6 +111,7 @@
   users.users.ben = {
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" "vboxusers" ];
+    shell = pkgs.fish;
   };
 
   # This value determines the NixOS release with which your system is to be

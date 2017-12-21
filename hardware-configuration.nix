@@ -22,6 +22,15 @@
       fsType = "vfat";
     };
 
+  fileSystems."/mnt/r" = {
+    device = "/dev/disk/by-label/ReallyBigDrive";
+    fsType = "ntfs";
+    noCheck = true;
+    neededForBoot = false;
+  };
+
+
+
   swapDevices = [ ];
 
   nix.maxJobs = lib.mkDefault 4;
