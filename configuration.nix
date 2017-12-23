@@ -51,7 +51,7 @@
     tdesktop weechat
     amarok vlc streamlink
     
-    gcc-6.4.0 gnumake
+    gcc-unwrapped gnumake
   ];
 
   # Fish!
