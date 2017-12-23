@@ -52,7 +52,10 @@
     amarok vlc streamlink
     
     gcc-unwrapped gnumake
-    python python27Packages.requests_toolbelt python27Packages.requests_ntlm
+    python
+
+    # For image-boostrap
+    gnupg multipath-tools parted busybox
   ];
 
   # Fish!
