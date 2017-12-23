@@ -46,9 +46,12 @@
     wget vim git file
     plasma-nm
     kate yakuake tmux
+    
     firefox-bin
     tdesktop weechat
     amarok vlc streamlink
+    
+    gcc-6.4.0 gnumake
   ];
 
   # Fish!
@@ -116,6 +119,19 @@
     extraGroups = [ "wheel" "networkmanager" "vboxusers" ];
     shell = pkgs.fish;
   };
+
+  # Define the systemd containers
+  # Arch - gaming:
+  systemd.nspawn.arch = {
+    enable = true;
+    execConfig = { Boot = true; };
+    filesConfig = {
+      Volatile = true; # Will make the OS stateless.
+    };
+    networkConfig = { VirtualEthernet = true; Port = "tcp:2200:22"; }; # Map localhost:2200 to container:22
+
+  };
+
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
