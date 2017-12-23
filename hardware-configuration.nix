@@ -35,7 +35,7 @@
     fsType = "ntfs-3g";
     noCheck = true;
     neededForBoot = false;
-    options = [ "umask=000" "noauto" ];
+    options = [ "umask=000" ];
   };
 
   fileSystems."/mnt/m" = {
@@ -43,7 +43,7 @@
     fsType = "ntfs-3g";
     noCheck = true;
     neededForBoot = false;
-    options = [ "umask=000" "noauto" ];
+    options = [ "umask=000" ];
   };
 
   swapDevices = [ ];
