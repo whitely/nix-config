@@ -101,6 +101,8 @@
 
   # Enable VirtualBox
   virtualisation.virtualbox.host.enable = true;
+  # Disable hardening to allow 3D acceleration
+  virtualisation.virtualbox.host.enableHardening = false;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   # users.extraUsers.guest = {
