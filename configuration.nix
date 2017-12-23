@@ -51,7 +51,8 @@
     tdesktop weechat
     amarok vlc streamlink
     
-    gcc-unwrapped gnumake python
+    gcc-unwrapped gnumake
+    python python27Packages.requests_toolbelt python27Packages.requests_ntlm
   ];
 
   # Fish!
