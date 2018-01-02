@@ -44,7 +44,7 @@
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
     wget vim git file
-    plasma-nm
+    plasma-nm gparted
     kate yakuake tmux
     
     firefox-bin
