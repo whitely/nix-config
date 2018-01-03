@@ -46,16 +46,22 @@
     wget vim git file
     plasma-nm gparted
     kate yakuake tmux
+    p7zip
     
     firefox-bin
     tdesktop weechat
     amarok vlc streamlink
+    gksu
+    truecrypt
     
     gcc-unwrapped gnumake
     python
 
     # For image-boostrap
     gnupg multipath-tools parted busybox
+
+    # For mounting exFAT SD cards, etc.
+    exfat fuse_exfat exfat-utils
   ];
 
   # Fish!
