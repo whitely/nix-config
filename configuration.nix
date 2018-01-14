@@ -62,6 +62,9 @@
 
     # For mounting exFAT SD cards, etc.
     exfat fuse_exfat exfat-utils
+
+    # For use with PulseAudio
+    gstreamer
   ];
 
   # Fish!
