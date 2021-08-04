@@ -10,45 +10,100 @@
       ./hardware-configuration.nix
     ];
 
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  
-  # Use for BIOS boot
-  # boot.loader.grub.device = "/dev/sdb";
+  # Use the GRUB 2 boot loader.
+  boot.loader = {
+    efi = {
+      canTouchEfiVariables = false; # Default is false
+      efiSysMountPoint = "/boot"; # Default is "/boot"
+    };
+    grub = {
+      enable = true;
+      efiSupport = true;
+      efiInstallAsRemovable = true;
+      useOSProber = false;
+      device = "nodev";
+    };
+  };
 
-
-  # Include the kernel modules necessary for mounting /
-
-  boot.initrd.kernelModules = [
-    "sata_nv"
-    "ext4"
-  ];
-
-  networking.hostName = "ben-nixDesktop"; # Define your hostname.
-  # Use networkmanager instead of wpa_supplicant
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true; # Enables wireless via networkmanager.
-
-  # Select internationalisation properties.
-  # i18n = {
-  #   consoleFont = "Lat2-Terminus16";
-  #   consoleKeyMap = "us";
-  #   defaultLocale = "en_US.UTF-8";
-  # };
+  # boot.loader.grub.efiSupport = true;
+  # boot.loader.grub.efiInstallAsRemovable = true;
+  # boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  # Define on which hard drive you want to install Grub.
+  # boot.loader.grub.device = "/dev/sda"; # or "nodev" for efi only
 
   # Set your time zone.
   time.timeZone = "America/Phoenix";
 
-  # List packages installed in system profile. To search by name, run:
-  # $ nix-env -qaP | grep wget
+  # The global useDHCP flag is deprecated, therefore explicitly set to false here.
+  # Per-interface useDHCP will be mandatory in the future, so this generated config
+  # replicates the default behaviour.
+  networking.hostName = "ben-nixos-thinkpad"; # Define your hostname.
+  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking.networkmanager.enable = true;
+  networking.useDHCP = false;
+  networking.interfaces.enp0s31f6.useDHCP = true;
+  networking.interfaces.wlp4s0.useDHCP = true;
+
+  # Configure network proxy if necessary
+  # networking.proxy.default = "http://user:password@proxy:port/";
+  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+
+  # Select internationalisation properties.
+  # i18n.defaultLocale = "en_US.UTF-8";
+  # console = {
+  #   font = "Lat2-Terminus16";
+  #   keyMap = "us";
+  # };
+
+  # Enable the X11 windowing system.
+  services.xserver.enable = true;
+
+
+  # Enable the Plasma 5 Desktop Environment.
+  services.xserver.displayManager.sddm.enable = true;
+  services.xserver.desktopManager.plasma5.enable = true;
+  
+
+  # Configure keymap in X11
+  # services.xserver.layout = "us";
+  # services.xserver.xkbOptions = "eurosign:e";
+
+  # Enable CUPS to print documents.
+  # services.printing.enable = true;
+
+  # Enable sound.
+  sound.enable = true;
+  hardware.pulseaudio.enable = true;
+
+  # Enable touchpad support (enabled default in most desktopManager).
+  # services.xserver.libinput.enable = true;
+
+  # Define a user account. Don't forget to set a password with ‘passwd’.
+  # users.users.jane = {
+  #   isNormalUser = true;
+  #   extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+  # };
+
+  # user Ben
+  users.users.ben = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" "networkmanager" "vboxusers" ];
+    shell = pkgs.fish;
+  };
+
+  # List packages installed in system profile. To search, run:
+  # $ nix search wget
+  # environment.systemPackages = with pkgs; [
+  #   wget vim
+  #   firefox
+  # ];
   environment.systemPackages = with pkgs; [
     wget vim git file
     plasma-nm gparted
     kate yakuake tmux
     p7zip
     
-    firefox-bin
+    firefox
     tdesktop weechat
     amarok vlc streamlink
     gksu
@@ -64,20 +119,19 @@
     exfat fuse_exfat exfat-utils
 
     # For use with PulseAudio
-    gstreamer
+    # gstreamer
   ];
 
   # Fish!
   programs.fish.enable = true;
 
-  # Web browser addons
-#  pkgs.firefox-bin = {
-#    enableGoogleTalkPlugin = true;
-#    enableAdobeFlash = true;
-#  };
-
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
+  # programs.mtr.enable = true;
+  # programs.gnupg.agent = {
+  #   enable = true;
+  #   enableSSHSupport = true;
+  # };
   programs.bash.enableCompletion = true;
   programs.mtr.enable = true;
   programs.gnupg.agent = { enable = true; enableSSHSupport = true; };
@@ -93,63 +147,13 @@
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
-
-  # Compromise for those juicy frames
-  nixpkgs.config.allowUnfree = true;
-
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-  services.xserver.layout = "us";
-  # services.xserver.xkbOptions = "eurosign:e";
-  services.xserver.videoDrivers = [ "nvidia" ];
-
-  # Enable touchpad support.
-  # services.xserver.libinput.enable = true;
-
-  # Enable the KDE Desktop Environment.
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
-
-  # Enable PulseAudio
-  hardware.pulseaudio.enable = true;
-
-  # Enable VirtualBox
-  virtualisation.virtualbox.host.enable = true;
-  # Disable hardening to allow 3D acceleration
-  virtualisation.virtualbox.host.enableHardening = false;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  # users.extraUsers.guest = {
-  #   isNormalUser = true;
-  #   uid = 1000;
-  # };
-
-  # user Ben
-  users.users.ben = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "vboxusers" ];
-    shell = pkgs.fish;
-  };
-
-  # Define the systemd containers
-  # Arch - gaming:
-  systemd.nspawn.arch = {
-    enable = true;
-    execConfig = { Boot = true; };
-    filesConfig = {
-      Volatile = true; # Will make the OS stateless.
-    };
-    networkConfig = { VirtualEthernet = true; Port = "tcp:2200:22"; }; # Map localhost:2200 to container:22
-
-  };
-
-
-  # This value determines the NixOS release with which your system is to be
-  # compatible, in order to avoid breaking some software such as database
-  # servers. You should change this only after NixOS release notes say you
-  # should.
-  system.stateVersion = "17.09"; # Did you read the comment?
+  # This value determines the NixOS release from which the default
+  # settings for stateful data, like file locations and database versions
+  # on your system were taken. It‘s perfectly fine and recommended to leave
+  # this value at the release version of the first install of this system.
+  # Before changing this value read the documentation for this option
+  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+  system.stateVersion = "20.09"; # Did you read the comment?
 
 }
+
