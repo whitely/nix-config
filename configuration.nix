@@ -55,14 +55,45 @@
   #   keyMap = "us";
   # };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  environment.pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw 
+
+  services.xserver = {
+    enable = true;
+
+    libinput = {
+      enable = true;
+      naturalScrolling = false;
+      middleEmulation = true;
+      tapping = true;
+    };
+
+    desktopManager = {
+      xterm.enable = false;
+    };
+
+    displayManager = {
+        defaultSession = "none+i3";
+    };
+
+    windowManager.i3 = {
+      enable = true;
+
+      package = pkgs.i3-gaps;
+
+      extraPackages = with pkgs; [
+        dmenu #application launcher most people use
+        i3status # gives you the default i3 status bar
+        i3lock #default i3 screen locker
+        i3blocks #if you are planning on using i3blocks over i3status
+     ];
+    };
+  };
 
 
   # Enable the Plasma 5 Desktop Environment.
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
-  
+#   services.xserver.displayManager.sddm.enable = true;
+#   services.xserver.desktopManager.plasma5.enable = true;
+
 
   # Configure keymap in X11
   # services.xserver.layout = "us";
@@ -102,13 +133,13 @@
     plasma-nm gparted
     kate yakuake tmux
     p7zip
-    
+
     firefox
     tdesktop weechat
     amarok vlc streamlink
     gksu
     truecrypt
-    
+
     gcc-unwrapped gnumake
     python
 
