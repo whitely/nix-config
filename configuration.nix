@@ -151,6 +151,7 @@
 
     # For use with PulseAudio
     # gstreamer
+    lxappearance
   ];
 
   # Fish!
