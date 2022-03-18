@@ -4,6 +4,17 @@
 
 { config, pkgs, ... }:
 
+let nixpkgsUnstable = import (builtins.fetchTarball {
+  # Descriptive name to make the store path easier to identify
+  name = "nixos-unstable";
+  # Commit hash for nixos-unstable as of 2018-09-12
+  url = "https://github.com/nixos/nixpkgs/archive/73ad5f9e147c0d2a2061f1d4bd91e05078dc0b58.tar.gz";
+  # Hash obtained using `nix-prefetch-url --unpack <url>`
+  sha256 = "01j7nhxbb2kjw38yk4hkjkkbmz50g3br7fgvad6b1cjpdvfsllds";
+}) {};
+
+in
+
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -128,6 +139,7 @@
   #   wget vim
   #   firefox
   # ];
+
   environment.systemPackages = with pkgs; [
     wget vim git file
     plasma-nm gparted
@@ -152,6 +164,11 @@
     # For use with PulseAudio
     # gstreamer
     lxappearance
+
+    # Development
+    # idea-ultimate vscode code
+
+    nixpkgsUnstable.signal-desktop
   ];
 
   # Fish!
