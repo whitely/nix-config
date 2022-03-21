@@ -140,10 +140,12 @@ in
   #   firefox
   # ];
 
+  nixpkgs.config.allowUnfree = true;
+
   environment.systemPackages = with pkgs; [
     wget vim git file
     plasma-nm gparted
-    kate yakuake tmux
+    kate yakuake tmux tldr
     p7zip
 
     firefox
@@ -164,9 +166,10 @@ in
     # For use with PulseAudio
     # gstreamer
     lxappearance
+    libsForQt5.spectacle
 
     # Development
-    # idea-ultimate vscode code
+    jetbrains.idea-ultimate vscode
 
     nixpkgsUnstable.signal-desktop
   ];
