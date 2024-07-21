@@ -8,6 +8,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      <home-manager/nixos>
     ];
 
   # Bootloader.
@@ -54,7 +55,7 @@
   # Enable the X11 windowing system.
   # You can disable this if you're only using the Wayland session.
   services.xserver.enable = true;
-  services.xserver.videoDrivers = [ "nvidia" ];
+#   services.xserver.videoDrivers = [ "nvidia" ];
 
   # Enable the KDE Plasma Desktop Environment.
   services.displayManager.sddm.enable = true;
@@ -88,21 +89,28 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
+
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
     wget vim git file
     plasma-nm gparted
     kate yakuake tmux
-    p7zip
+    p7zip zip
+
+    tmux grc
+    jq ripgrep fd tldr fzf
+    fishPlugins.fzf
     
 #     firefox-bin
-    tdesktop weechat
+    # tdesktop
+    weechat
     amarok vlc streamlink
 #     gksu
-#     truecrypt
+    veracrypt
     
     gcc-unwrapped gnumake
+    nurl
     python3
 
     # For image-boostrap
@@ -115,12 +123,22 @@
 #     gstreamer
 
     lm_sensors
+
+    _1password-gui _1password
+    nextcloud-client
   ];
 
   # Fish!
   programs.fish.enable = true;
   programs.firefox.enable = true;
 
+  programs._1password.enable = true;
+  programs._1password-gui = {
+    enable = true;
+    # Certain features, including CLI integration and system authentication support,
+    # require enabling PolKit integration on some desktop environments (e.g. Plasma).
+    polkitPolicyOwners = [ "ben" ];
+  };
 
   # Web browser addons
 #  pkgs.firefox-bin = {
@@ -152,6 +170,21 @@
   #   isNormalUser = true;
   #   uid = 1000;
   # };
+
+  home-manager.useGlobalPkgs = true;
+  home-manager.backupFileExtension = "backup";
+  home-manager.users.ben = { pkgs, ... }: {
+    programs.bash.enable = true;
+    programs.fish.enable = true;
+
+    home.packages = with pkgs; [
+      direnv devenv
+    ];
+
+    # The state version is required and should stay at the version you
+    # originally installed.
+    home.stateVersion = "24.05";
+  };
 
   # user Ben
   users.users.ben = {
