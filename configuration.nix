@@ -139,10 +139,13 @@ in {
 
     _1password-gui _1password
     nextcloud-client
+
+    steam-run
   ];
 
   # Fish!
   programs.fish.enable = true;
+
   programs.firefox = {
     enable = true;
 
@@ -372,6 +375,19 @@ in {
     enableSSHSupport = true;
   };
 
+  programs.java.enable = true;
+
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+    localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
+
+#     package = pkgs.steam.override { withJava = true; };
+    gamescopeSession.enable = true; # Display upscaling
+
+    # See https://nixos.wiki/wiki/Steam#Changing_the_driver_on_AMD_GPUs
+  };
 
   # Define the systemd containers
   # Arch - gaming:
