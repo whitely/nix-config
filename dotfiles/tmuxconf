@@ -1,0 +1,9 @@
+set -g prefix `
+bind ` send-keys `
+
+bind r source-file ~/.tmux.conf
+
+set -g mouse on
+# Use vim keybinds in copy mode
+setw -g mode-keys vi
+bind -n M-w run -b 'tmux show-buffer | clip.exe'

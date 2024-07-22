@@ -175,7 +175,25 @@
   home-manager.backupFileExtension = "backup";
   home-manager.users.ben = { pkgs, ... }: {
     programs.bash.enable = true;
-    programs.fish.enable = true;
+      # Home Manager is pretty good at managing dotfiles. The primary way to manage
+      # plain files is through 'home.file'.
+      home.file = {
+        # # Building this configuration will create a copy of 'dotfiles/screenrc' in
+        # # the Nix store. Activating the configuration will then make '~/.screenrc' a
+        # # symlink to the Nix store copy.
+        # ".screenrc".source = dotfiles/screenrc;
+
+        ".tmux.conf".source = dotfiles/tmuxconf;
+        # ".config/fish/config.fish".source = dotfiles/config.fish;
+
+        ".gitconfig".source = dotfiles/gitconfig;
+
+        # # You can also set the file content immediately.
+        # ".gradle/gradle.properties".text = ''
+        #   org.gradle.console=verbose
+        #   org.gradle.daemon.idletimeout=3600000
+        # '';
+      };
 
     home.packages = with pkgs; [
       direnv devenv
