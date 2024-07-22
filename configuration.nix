@@ -175,29 +175,112 @@
   home-manager.backupFileExtension = "backup";
   home-manager.users.ben = { pkgs, ... }: {
     programs.bash.enable = true;
-      # Home Manager is pretty good at managing dotfiles. The primary way to manage
-      # plain files is through 'home.file'.
-      home.file = {
-        # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-        # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-        # # symlink to the Nix store copy.
-        # ".screenrc".source = dotfiles/screenrc;
 
-        ".tmux.conf".source = dotfiles/tmuxconf;
-        # ".config/fish/config.fish".source = dotfiles/config.fish;
+    programs.fish = {
+      enable = true;
+      plugins = [
+      # Necessary when using home-manager standalone installed on e.g. Ubuntu, but probably not necessary on nixos
+#         {
+#           name = "_00-nix-env"; # Prefixing with _00 to ensure environment loads before other stuff; fish sources alphabetically
+#           src = pkgs.fetchFromGitHub {
+#             owner = "lilyball";
+#             repo = "nix-env.fish";
+#             rev = "7b65bd228429e852c8fdfa07601159130a818cfa";
+#             sha256 = "RG/0rfhgq6aEKNZ0XwIqOaZ6K5S4+/Y5EEMnIdtfPhk=";
+#           };
+#         }
+        {
+          name = "10-config";
+          src = pkgs.fetchFromGitHub {
+            owner = "oh-my-fish";
+            repo = "plugin-config";
+            rev = "13c424efb73b153d9b8ad92916cf51159d44099d";
+            sha256 = "23hjWq1xdFs8vTv56ebD4GdhcDtcwShaRbHIehPSOXQ=";
+          };
+        }
+        {
+          name = "z";
+          src = pkgs.fetchFromGitHub {
+            owner = "jethrokuan";
+            repo = "z";
+            rev = "85f863f20f24faf675827fb00f3a4e15c7838d76";
+            sha256 = "+FUBM7CodtZrYKqU542fQD+ZDGrd2438trKM0tIESs0=";
+          };
+        }
+        {
+          name = "tmux-zen";
+          src = pkgs.fetchFromGitHub {
+            owner = "sagebind";
+            repo = "tmux-zen";
+            rev = "1162f59ebd057fd6c881b58e2bedf04bbe9ca3cf";
+            hash = "sha256-Oc3IfWK+EO4TN3eU7lpz85qhqDohIL+7pS1fcl31i3s=";
+          };
+        }
+        { name = "grc"; src = pkgs.fishPlugins.grc.src; }
+      ];
 
-        ".gitconfig".source = dotfiles/gitconfig;
+      interactiveShellInit = ''
+        # Switched to using tmux-zen
+        # if not set -q TMUX
+        #   exec tmux
+        # end
 
-        # # You can also set the file content immediately.
-        # ".gradle/gradle.properties".text = ''
-        #   org.gradle.console=verbose
-        #   org.gradle.daemon.idletimeout=3600000
-        # '';
+        direnv hook fish | source
+      '';
+
+      functions = {
+        # Steal OMF's reload function https://github.com/oh-my-fish/oh-my-fish/blob/master/pkg/omf/functions/core/omf.reload.fish
+        reload = ''
+          set -q CI; and return 0
+
+          history --save
+          set -gx dirprev $dirprev
+          set -gx dirnext $dirnext
+          set -gx dirstack $dirstack
+          set -gx fish_greeting ""
+
+          exec fish
+        '';
       };
+    };
+
+    # Home Manager is pretty good at managing dotfiles. The primary way to manage
+    # plain files is through 'home.file'.
+    home.file = {
+      # # Building this configuration will create a copy of 'dotfiles/screenrc' in
+      # # the Nix store. Activating the configuration will then make '~/.screenrc' a
+      # # symlink to the Nix store copy.
+      # ".screenrc".source = dotfiles/screenrc;
+
+      ".tmux.conf".source = dotfiles/tmuxconf;
+      # ".config/fish/config.fish".source = dotfiles/config.fish;
+
+      ".gitconfig".source = dotfiles/gitconfig;
+
+      # # You can also set the file content immediately.
+      # ".gradle/gradle.properties".text = ''
+      #   org.gradle.console=verbose
+      #   org.gradle.daemon.idletimeout=3600000
+      # '';
+    };
 
     home.packages = with pkgs; [
       direnv devenv
     ];
+
+    home.sessionVariables = {
+      EDITOR = "nvim";
+    };
+
+    programs.neovim = {
+      enable = true;
+      defaultEditor = true;
+      viAlias = true;
+      vimAlias = true;
+      plugins = [
+        pkgs.vimPlugins.vim-nix
+      ];
+    };
 
     # The state version is required and should stay at the version you
     # originally installed.
