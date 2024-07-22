@@ -4,7 +4,20 @@
 
 { config, pkgs, ... }:
 
-{
+let
+  lock-false = {
+    Value = false;
+    Status = "locked";
+  };
+  lock-true = {
+    Value = true;
+    Status = "locked";
+  };
+  lock-empty-string = {
+    Value = "";
+    Status = "locked";
+  };
+in {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
@@ -130,7 +143,56 @@
 
   # Fish!
   programs.fish.enable = true;
-  programs.firefox.enable = true;
+  programs.firefox = {
+    enable = true;
+
+    policies = {
+      DisableTelemetry = true;
+      DisableFirefoxStudies = true;
+      DontCheckDefaultBrowser = true;
+      DisplayBookmarksToolbar = "newtab";
+      # DisablePocket = true;
+      SearchBar = "unified";
+
+      EnableTrackingProtection = {
+        Value= true;
+        Locked = true;
+        Cryptomining = true;
+        Fingerprinting = true;
+      };
+
+      Preferences = {
+        # Privacy settings
+        # "extensions.pocket.enabled" = lock-false;
+        "browser.newtabpage.pinned" = lock-empty-string;
+        # "browser.topsites.contile.enabled" = lock-false;
+        "browser.newtabpage.activity-stream.showSponsored" = lock-false;
+        "browser.newtabpage.activity-stream.system.showSponsored" = lock-false;
+        "browser.newtabpage.activity-stream.showSponsoredTopSites" = lock-false;
+      };
+
+      # Get extension IDs from about:support
+      # see https://discourse.nixos.org/t/declare-firefox-extensions-and-settings/36265
+      ExtensionSettings = {
+        "uBlock0@raymondhill.net" = {
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
+          installation_mode = "force_installed";
+        };
+        "{d634138d-c276-4fc8-924b-40a0ea21d284}" = {
+          install_url = "https://addons.mozilla.org/firefox/downloads/file/4307081/1password_x_password_manager-2.25.1.xpi";
+          installation_mode = "force_installed";
+        };
+        "jid1-MnnxcxisBPnSXQ@jetpack" = {
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/privacy-badger17/latest.xpi";
+          installation_mode = "force_installed";
+        };
+        "extension@tabliss.io" = {
+          install_url = "https://addons.mozilla.org/firefox/downloads/file/3940751/tabliss-2.6.0.xpi";
+          installation_mode = "force_installed";
+        };
+      };
+    };
+  };
 
   programs._1password.enable = true;
   programs._1password-gui = {
@@ -241,6 +303,8 @@
 
           exec fish
         '';
+
+        nrs = ''sudo nixos-rebuild switch'';
       };
     };
 
