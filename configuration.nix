@@ -144,6 +144,7 @@ in {
     steam-run
     # Links may not open in FF, Krisp won't work, etc.: https://nixos.wiki/wiki/Discord
     discord vesktop # Screen sharing on Wayland
+    piper libratbag # Gaming mouse config program
     mako # notification service for discord
   ];
 
@@ -219,6 +220,12 @@ in {
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+
+  services.ratbagd.enable = true;
+  # `ratbagctl list` to get device cute names, e.g. "singing-gundi" for my mouse
+  # `ratbagctl singing-gundi button 6 action set macro KEY_F8` to set macro (can also interact with `piper` to do it via GUI)
+  # In KDE settings, "Legacy X11 App Support" to allow F keys to be read globally
+  # Find it: https://github.com/shalva97/kde-configuration-files
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
