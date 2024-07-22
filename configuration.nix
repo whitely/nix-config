@@ -141,6 +141,9 @@ in {
     nextcloud-client
 
     steam-run
+    # Links may not open in FF, Krisp won't work, etc.: https://nixos.wiki/wiki/Discord
+    discord vesktop # Screen sharing on Wayland
+    mako # notification service for discord
   ];
 
   # Fish!
