@@ -114,6 +114,7 @@ in {
     tmux grc
     jq ripgrep fd tldr fzf
     fishPlugins.fzf
+    xsel xclip
     
 #     firefox-bin
     # tdesktop
