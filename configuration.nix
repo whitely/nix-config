@@ -335,6 +335,9 @@ in {
 
       ".gitconfig".source = dotfiles/gitconfig;
 
+      ".config/autostart/org.kde.yakuake.desktop".source = dotfiles/yakuake_autostart;
+      ".config/yakuakerc".source = dotfiles/yakuakerc;
+
       # # You can also set the file content immediately.
       # ".gradle/gradle.properties".text = ''
       #   org.gradle.console=verbose

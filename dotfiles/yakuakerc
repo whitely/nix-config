@@ -1,0 +1,9 @@
+[Appearance]
+Blur=true
+Translucency=true
+
+[Behavior]
+FocusFollowsMouse=true
+
+[Dialogs]
+FirstRun=false
