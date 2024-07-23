@@ -136,7 +136,7 @@ in {
     # For use with PulseAudio
 #     gstreamer
 
-    lm_sensors
+    lm_sensors htop
 
     _1password-gui _1password
     nextcloud-client
@@ -146,6 +146,9 @@ in {
     discord vesktop # Screen sharing on Wayland
     piper libratbag # Gaming mouse config program
     mako # notification service for discord
+
+    quickemu
+    virt-manager
   ];
 
   # Fish!
@@ -363,6 +366,13 @@ in {
       ];
     };
 
+    dconf.settings = {
+      "org/virt-manager/virt-manager/connections" = {
+        autoconnect = ["qemu:///system"];
+        uris = ["qemu:///system"];
+      };
+    };
+
     # The state version is required and should stay at the version you
     # originally installed.
     home.stateVersion = "24.05";
@@ -373,7 +383,7 @@ in {
     isNormalUser = true;
     shell = pkgs.fish;
     description = "Ben";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "libvirtd" ];
     packages = with pkgs; [
       kdePackages.kate
     #  thunderbird
@@ -401,6 +411,25 @@ in {
     gamescopeSession.enable = true; # Display upscaling
 
     # See https://nixos.wiki/wiki/Steam#Changing_the_driver_on_AMD_GPUs
+  };
+
+  programs.dconf.enable = true; # virt-manager requires dconf to remember settings
+  programs.virt-manager.enable = true;
+
+  virtualisation.libvirtd = {
+    enable = true;
+    qemu = {
+      package = pkgs.qemu_kvm;
+      runAsRoot = true;
+      swtpm.enable = true;
+      ovmf = {
+        enable = true;
+        packages = [(pkgs.OVMF.override {
+          secureBoot = true;
+          tpmSupport = true;
+        }).fd];
+      };
+    };
   };
 
   # Define the systemd containers
