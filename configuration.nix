@@ -39,6 +39,7 @@ in {
   boot.initrd.kernelModules = [
     "sata_nv"
     "ext4"
+    "amdgpu"
   ];
 
   networking.hostName = "agave-nix"; # Define your hostname.
@@ -68,7 +69,7 @@ in {
   # Enable the X11 windowing system.
   # You can disable this if you're only using the Wayland session.
   services.xserver.enable = true;
-#   services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = [ "amdgpu" ];
 
   # Enable the KDE Plasma Desktop Environment.
   services.displayManager.sddm.enable = true;
@@ -110,6 +111,8 @@ in {
     plasma-nm gparted
     kate yakuake tmux
     p7zip zip
+
+    connman
 
     tmux grc
     jq ripgrep fd tldr fzf
