@@ -151,7 +151,8 @@ in {
     mako # notification service for discord
 
     quickemu
-    virt-manager
+    virt-manager virt-viewer
+    spice spice-protocol spice-gtk
   ];
 
   # Fish!
@@ -434,6 +435,7 @@ in {
       };
     };
   };
+  virtualisation.spiceUSBRedirection.enable = true;
 
   # Define the systemd containers
   # Arch - gaming:
