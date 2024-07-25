@@ -25,13 +25,13 @@ in {
     ];
 
   # Bootloader.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/sdc";
-  boot.loader.grub.useOSProber = true;
+  # boot.loader.grub.enable = true;
+  # boot.loader.grub.device = "/dev/sdc";
+  # boot.loader.grub.useOSProber = true;
 
   # Use the systemd-boot EFI boot loader.
-#   boot.loader.systemd-boot.enable = true;
-#   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
 
   # Include the kernel modules necessary for mounting /
@@ -41,7 +41,7 @@ in {
     "ext4"
   ];
 
-  networking.hostName = "ben-nixDesktop"; # Define your hostname.
+  networking.hostName = "agave-nix"; # Define your hostname.
   # Use networkmanager instead of wpa_supplicant
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true; # Enables wireless via networkmanager.
