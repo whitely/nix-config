@@ -153,6 +153,7 @@ in {
     quickemu
     virt-manager virt-viewer
     spice spice-protocol spice-gtk
+    samba4Full
   ];
 
   # Fish!
@@ -326,6 +327,8 @@ in {
         '';
 
         nrs = ''sudo nixos-rebuild switch'';
+
+        win = ''quickemu --vm ~/virtual_machines/windows-10.conf --display spice --width 1920 --height 1080'';
       };
     };
 
