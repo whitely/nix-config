@@ -218,6 +218,9 @@ in {
     polkitPolicyOwners = [ "ben" ];
   };
 
+  services.flatpak.enable = true;
+  # Add a repo afterwards: `flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo`
+
   # Web browser addons
 #  pkgs.firefox-bin = {
 #    enableGoogleTalkPlugin = true;
@@ -308,6 +311,8 @@ in {
         # if not set -q TMUX
         #   exec tmux
         # end
+
+        set -gx XDG_DATA_DIRS "$XDG_DATA_DIRS:/usr/share:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share"
 
         direnv hook fish | source
       '';
@@ -416,6 +421,9 @@ in {
 
 #     package = pkgs.steam.override { withJava = true; };
     gamescopeSession.enable = true; # Display upscaling
+
+    # If all the text is tiny, run steam this way:
+    # GDK_SCALE=2 steam
 
     # See https://nixos.wiki/wiki/Steam#Changing_the_driver_on_AMD_GPUs
   };
