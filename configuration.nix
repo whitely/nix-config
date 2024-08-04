@@ -140,6 +140,8 @@ in {
 #     gstreamer
 
     lm_sensors htop
+    dmidecode neofetch
+    glxinfo vulkan-tools
 
     _1password-gui _1password
     nextcloud-client
@@ -447,6 +449,12 @@ in {
     };
   };
   virtualisation.spiceUSBRedirection.enable = true;
+
+  hardware.opengl = {
+    enable = true;
+    extraPackages = [ pkgs.mesa.drivers ];
+  };
+
 
   # Define the systemd containers
   # Arch - gaming:
