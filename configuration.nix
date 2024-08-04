@@ -108,11 +108,11 @@ in {
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
     wget vim git file
-    plasma-nm gparted
+    gparted
     kate yakuake tmux
     p7zip zip
 
-    connman
+    plasma-nm connman networkmanagerapplet
 
     tmux grc
     jq ripgrep fd tldr fzf
