@@ -159,6 +159,8 @@ in {
     virt-manager virt-viewer
     spice spice-protocol spice-gtk
     samba4Full
+
+    pciutils # How I'm getting the lspci manpage
   ];
 
   # Fish!
@@ -319,6 +321,8 @@ in {
 
         set -gx XDG_DATA_DIRS "$XDG_DATA_DIRS:/usr/share:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share"
 
+        set PATH /home/ben/.local/bin/ $PATH
+
         direnv hook fish | source
       '';
 
@@ -358,6 +362,8 @@ in {
       ".config/autostart/org.kde.yakuake.desktop".source = dotfiles/yakuake_autostart;
       ".config/autostart/nm-applet.desktop".source = dotfiles/nm-applet_autostart;
       ".config/yakuakerc".source = dotfiles/yakuakerc;
+
+      ".local/bin/ls-iommu".source = dotfiles/ls-iommu;
 
       # # You can also set the file content immediately.
       # ".gradle/gradle.properties".text = ''
