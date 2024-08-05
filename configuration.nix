@@ -42,6 +42,9 @@ in {
     "amdgpu"
   ];
 
+  # https://astrid.tech/2022/09/22/0/nixos-gpu-vfio/
+  boot.kernelParams = [ "amd_iommu=on" ];
+
   networking.hostName = "agave-nix"; # Define your hostname.
   # Use networkmanager instead of wpa_supplicant
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -353,6 +356,7 @@ in {
       ".gitconfig".source = dotfiles/gitconfig;
 
       ".config/autostart/org.kde.yakuake.desktop".source = dotfiles/yakuake_autostart;
+      ".config/autostart/nm-applet.desktop".source = dotfiles/nm-applet_autostart;
       ".config/yakuakerc".source = dotfiles/yakuakerc;
 
       # # You can also set the file content immediately.
