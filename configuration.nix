@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   lock-false = {
@@ -121,7 +121,7 @@ in {
     
 #     firefox-bin
     # tdesktop
-    weechat
+    signal-desktop weechat
     amarok vlc streamlink
 #     gksu
     veracrypt
@@ -397,7 +397,7 @@ in {
     isNormalUser = true;
     shell = pkgs.fish;
     description = "Ben";
-    extraGroups = [ "networkmanager" "wheel" "libvirtd" ];
+    extraGroups = [ "networkmanager" "wheel" "libvirtd" "gamemode" ];
     packages = with pkgs; [
       kdePackages.kate
     #  thunderbird
@@ -415,6 +415,7 @@ in {
 
   programs.java.enable = true;
 
+  programs.gamemode.enable = true;
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
@@ -428,6 +429,23 @@ in {
     # GDK_SCALE=2 steam
 
     # See https://nixos.wiki/wiki/Steam#Changing_the_driver_on_AMD_GPUs
+
+    # Gamemode settings
+    # Make sure you edit each game's launch command to be `gamemoderun %command%`!
+    # https://nixos.wiki/wiki/Gamemode
+    package = pkgs.steam.override {
+      extraPkgs = (pkgs: with pkgs; [
+        gamemode
+        # additional packages...
+        # e.g. some games require python3
+      ]);
+      # extraLibraries = pkgs: [ pkgs.gperftools ];
+      # - Automatically enable gamemode whenever Steam is running
+      # -- NOTE: Assumes that a working system install of gamemode already exists!
+      extraProfile = let gmLib = "${lib.getLib(pkgs.gamemode)}/lib"; in ''
+        export LD_LIBRARY_PATH="${gmLib}:$LD_LIBRARY_PATH"
+      '';
+    };
   };
 
   programs.dconf.enable = true; # virt-manager requires dconf to remember settings
