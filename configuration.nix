@@ -126,6 +126,7 @@ in {
     # tdesktop
     signal-desktop weechat
     amarok vlc streamlink
+    pavucontrol
 #     gksu
     veracrypt
     
@@ -135,6 +136,8 @@ in {
 
     # For image-boostrap
     gnupg multipath-tools parted busybox
+
+    deluge
 
     # For mounting exFAT SD cards, etc.
 #     exfat fuse_exfat exfat-utils
@@ -154,6 +157,9 @@ in {
     discord vesktop # Screen sharing on Wayland
     piper libratbag # Gaming mouse config program
     mako # notification service for discord
+
+    dolphin-emu
+    appimage-run # For Slippi
 
     quickemu
     virt-manager virt-viewer
@@ -227,6 +233,27 @@ in {
 
   services.flatpak.enable = true;
   # Add a repo afterwards: `flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo`
+
+  programs.appimage.binfmt = true; # Allow direct running of appimage; see https://nixos.wiki/wiki/Appimage
+  # GameCube controller hardware support
+#   services.udev.packages = [ pkgs.dolphinEmu ];
+#   boot.extraModulePackages = [
+#     config.boot.kernelPackages.gcadapter-oc-kmod
+#   ];
+#
+#   # to autoload at boot:
+#   boot.kernelModules = [
+#     "gcadapter_oc"
+#   ];
+
+  boot.binfmt.registrations.appimage = {
+    wrapInterpreterInShell = false;
+    interpreter = "${pkgs.appimage-run}/bin/appimage-run";
+    recognitionType = "magic";
+    offset = 0;
+    mask = ''\xff\xff\xff\xff\x00\x00\x00\x00\xff\xff\xff'';
+    magicOrExtension = ''\x7fELF....AI\x02'';
+  };
 
   # Web browser addons
 #  pkgs.firefox-bin = {
