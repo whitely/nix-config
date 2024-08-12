@@ -158,6 +158,8 @@ in {
     piper libratbag # Gaming mouse config program
     mako # notification service for discord
 
+    inotify-tools # For finding those pesky config files on *nix-steam: `inotifywatch -r --event close_write ~/.local/share/Steam/steamapps/common/Elite\ Dangerous/`
+
     dolphin-emu
     appimage-run # For Slippi
 
@@ -392,6 +394,8 @@ in {
 
       ".local/bin/ls-iommu".source = dotfiles/ls-iommu;
 
+      ".local/share/Steam/steamapps/compatdata/359320/pfx/drive_c/users/steamuser/Local Settings/Application Data/Frontier Developments/Elite Dangerous/Options/Bindings/Custom.4.1.binds".source = dotfiles/Elite_Dangerous_4.1;
+
       # # You can also set the file content immediately.
       # ".gradle/gradle.properties".text = ''
       #   org.gradle.console=verbose
@@ -401,6 +405,8 @@ in {
 
     home.packages = with pkgs; [
       direnv devenv
+      jstest-gtk linuxConsoleTools
+      # joystickwake # doesn't seem to work; just use `gamemoderun %command%` in steam options for E:D and other joystick apps to prevent sleep
     ];
 
     home.sessionVariables = {
