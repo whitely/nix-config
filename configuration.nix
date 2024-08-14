@@ -430,6 +430,15 @@ in {
       };
     };
 
+    # Looks like there's a flake here for slippi:
+    # https://github.com/djanatyn/ssbm-nix
+    # it's cloned in ~/code/
+#     ssbm.slippi-launcher= {
+#       enable = true;
+#       # Replace with the path to your Melee ISO
+#       isoPath = "Path/To/SSBM.ciso";
+#     };
+
     # The state version is required and should stay at the version you
     # originally installed.
     home.stateVersion = "24.05";
