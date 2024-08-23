@@ -221,6 +221,10 @@ in {
           install_url = "https://addons.mozilla.org/firefox/downloads/file/3940751/tabliss-2.6.0.xpi";
           installation_mode = "force_installed";
         };
+        "{84601290-bec9-494a-b11c-1baa897a9683}" = {
+          install_url = "https://addons.mozilla.org/firefox/downloads/file/4192880/ctrl_number_to_switch_tabs-1.0.2.xpi";
+          installation_mode = "force_installed";
+        };
       };
     };
   };
