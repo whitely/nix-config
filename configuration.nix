@@ -78,6 +78,10 @@ in {
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
 
+  # Enable Hyprland
+  # https://wiki.hyprland.org/Nix/
+  programs.hyprland.enable = true;
+
   # Configure keymap in X11
   services.xserver = {
     xkb.layout = "us";
@@ -114,6 +118,8 @@ in {
     gparted
     kate yakuake tmux
     p7zip zip
+
+    kitty wofi
 
     plasma-nm connman networkmanagerapplet
 
@@ -157,6 +163,7 @@ in {
     discord vesktop # Screen sharing on Wayland
     piper libratbag # Gaming mouse config program
     mako # notification service for discord
+    obs-studio
 
     inotify-tools # For finding those pesky config files on *nix-steam: `inotifywatch -r --event close_write ~/.local/share/Steam/steamapps/common/Elite\ Dangerous/`
 
@@ -302,6 +309,106 @@ in {
   home-manager.backupFileExtension = "backup";
   home-manager.users.ben = { pkgs, ... }: {
     programs.bash.enable = true;
+
+    wayland.windowManager.hyprland = {
+      enable = true;
+
+      # config specified via settings is in nix lang
+      # config specified via extraConfig is just hyprland raw config
+      settings = {
+        "$mod" = "ALT";
+        "$mainMod" = "ALT";
+
+        "$terminal" = "kitty";
+        "$fileManager" = "dolphin";
+        "$menu" = "wofi --show drun";
+      };
+
+      extraConfig = ''
+        # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
+        bind = $mainMod, Q, exec, $terminal
+        bind = $mainMod, C, killactive,
+        bind = $mainMod, M, exit,
+        bind = $mainMod, E, exec, $fileManager
+        bind = $mainMod, V, togglefloating,
+        bind = $mainMod, R, exec, $menu
+        bind = $mainMod, P, pseudo, # dwindle
+        bind = $mainMod, J, togglesplit, # dwindle
+
+        bind = $mainMod, F, exec, firefox
+
+        # Move focus with mainMod + arrow keys
+        bind = $mainMod, left, movefocus, l
+        bind = $mainMod, right, movefocus, r
+        bind = $mainMod, up, movefocus, u
+        bind = $mainMod, down, movefocus, d
+
+        # Switch workspaces with mainMod + [0-9]
+        bind = $mainMod, 1, workspace, 1
+        bind = $mainMod, 2, workspace, 2
+        bind = $mainMod, 3, workspace, 3
+        bind = $mainMod, 4, workspace, 4
+        bind = $mainMod, 5, workspace, 5
+        bind = $mainMod, 6, workspace, 6
+        bind = $mainMod, 7, workspace, 7
+        bind = $mainMod, 8, workspace, 8
+        bind = $mainMod, 9, workspace, 9
+        bind = $mainMod, 0, workspace, 10
+
+        # Move active window to a workspace with mainMod + SHIFT + [0-9]
+        bind = $mainMod SHIFT, 1, movetoworkspace, 1
+        bind = $mainMod SHIFT, 2, movetoworkspace, 2
+        bind = $mainMod SHIFT, 3, movetoworkspace, 3
+        bind = $mainMod SHIFT, 4, movetoworkspace, 4
+        bind = $mainMod SHIFT, 5, movetoworkspace, 5
+        bind = $mainMod SHIFT, 6, movetoworkspace, 6
+        bind = $mainMod SHIFT, 7, movetoworkspace, 7
+        bind = $mainMod SHIFT, 8, movetoworkspace, 8
+        bind = $mainMod SHIFT, 9, movetoworkspace, 9
+        bind = $mainMod SHIFT, 0, movetoworkspace, 10
+
+        # Example special workspace (scratchpad)
+        bind = $mainMod, S, togglespecialworkspace, magic
+        bind = $mainMod SHIFT, S, movetoworkspace, special:magic
+
+        # Scroll through existing workspaces with mainMod + scroll
+        bind = $mainMod, mouse_down, workspace, e+1
+        bind = $mainMod, mouse_up, workspace, e-1
+
+        # Move/resize windows with mainMod + LMB/RMB and dragging
+        bindm = $mainMod, mouse:272, movewindow
+        bindm = $mainMod, mouse:273, resizewindow
+      '';
+
+
+
+#       "$mainMod" = "ALT";
+#       bind =
+#         [
+#           "$mod, F, exec, firefox"
+#           ", Print, exec, grimblast copy area"
+#         ]
+#         ++ (
+#           # workspaces
+#           # binds $mod + [shift +] {1..10} to [move to] workspace {1..10}
+#           builtins.concatLists (builtins.genList (
+#               x: let
+#                 ws = let
+#                   c = (x + 1) / 10;
+#                 in
+#                   builtins.toString (x + 1 - (c * 10));
+#               in [
+#                 "$mod, ${ws}, workspace, ${toString (x + 1)}"
+#                 "$mod SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}"
+#               ]
+#             )
+#             10)
+#         );
+
+#       plugins = [
+#         inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system}.hyprbars
+#       ];
+    };
 
     programs.fish = {
       enable = true;
