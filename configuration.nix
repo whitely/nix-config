@@ -162,6 +162,7 @@ in {
     # Links may not open in FF, Krisp won't work, etc.: https://nixos.wiki/wiki/Discord
     discord vesktop # Screen sharing on Wayland
     piper libratbag # Gaming mouse config program
+    wev xorg.xev # Mouse and keyboard viewers, to see which keycode a button/key is
     mako # notification service for discord
     obs-studio
 
@@ -325,6 +326,8 @@ in {
       };
 
       extraConfig = ''
+
+
         # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
         bind = $mainMod, Q, exec, $terminal
         bind = $mainMod, C, killactive,
@@ -378,6 +381,8 @@ in {
         # Move/resize windows with mainMod + LMB/RMB and dragging
         bindm = $mainMod, mouse:272, movewindow
         bindm = $mainMod, mouse:273, resizewindow
+
+        bind = , mouse:278, pass, ^(discord)$
       '';
 
 
@@ -518,6 +523,8 @@ in {
       direnv devenv
       jstest-gtk linuxConsoleTools
       # joystickwake # doesn't seem to work; just use `gamemoderun %command%` in steam options for E:D and other joystick apps to prevent sleep
+
+      hyprpaper waybar
     ];
 
     home.sessionVariables = {
