@@ -468,7 +468,7 @@ in {
       jstest-gtk linuxConsoleTools
       # joystickwake # doesn't seem to work; just use `gamemoderun %command%` in steam options for E:D and other joystick apps to prevent sleep
 
-      hyprpaper waybar
+      hyprpaper waybar font-awesome font-awesome_5
     ];
 
     home.sessionVariables = {
