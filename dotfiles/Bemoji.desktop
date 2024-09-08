@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Bemoji
+Comment=Pick an emoji!
+Exec=bemoji
+Terminal=false
+Type=Application

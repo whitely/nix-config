@@ -33,9 +33,9 @@ in {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  boot.kernelModules = [ "v4l2loopback" ];
 
   # Include the kernel modules necessary for mounting /
-
   boot.initrd.kernelModules = [
     "sata_nv"
     "ext4"
@@ -137,7 +137,7 @@ in {
     veracrypt
     
     gcc-unwrapped gnumake
-    nurl
+    nurl nix-search-cli
     python3
 
     # For image-boostrap
@@ -430,6 +430,8 @@ in {
         nrs = ''sudo nixos-rebuild switch'';
 
         win = ''quickemu --vm ~/virtual_machines/windows-10.conf --display spice --width 1920 --height 1080'';
+
+        record = ''wf-recorder -g "$(slurp)" -f "$argv[1]"'';
       };
     };
 
@@ -442,6 +444,18 @@ in {
       # ".screenrc".source = dotfiles/screenrc;
 
       ".config/hypr/basic.conf".source = dotfiles/hyprland_basic.conf;
+      ".config/waybar" = {
+        source = dotfiles/waybar;
+        recursive = true;
+      };
+      ".config/hypr/screenshots" = {
+        source = dotfiles/hypr/screenshots;
+        recursive = true;
+      };
+      ".config/hypr/hypr_gamemode.sh".source = dotfiles/hypr/hypr_gamemode.sh;
+      ".config/wofi/style.css".source = dotfiles/hypr/wofi.css;
+      ".config/hypr/hyprpaper.conf".source = dotfiles/hypr/hyprpaper.conf;
+      ".local/share/applications/Bemoji.desktop".source = dotfiles/Bemoji.desktop;
 
       ".tmux.conf".source = dotfiles/tmuxconf;
       # ".config/fish/config.fish".source = dotfiles/config.fish;
@@ -468,7 +482,12 @@ in {
       jstest-gtk linuxConsoleTools
       # joystickwake # doesn't seem to work; just use `gamemoderun %command%` in steam options for E:D and other joystick apps to prevent sleep
 
-      hyprpaper waybar font-awesome font-awesome_5
+      hyprpaper waybar font-awesome font-awesome_5 playerctl
+      xdg-desktop-portal-hyprland grim slurp swappy grimblast
+      wl-clipboard wl-screenrec wf-recorder ffmpeg-full
+
+      gimp-with-plugins
+      wofi-emoji bemoji
     ];
 
     home.sessionVariables = {

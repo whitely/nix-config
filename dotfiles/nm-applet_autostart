@@ -1,0 +1,9 @@
+[Desktop Entry]
+Categories=Qt;KDE;System;
+Name=NetworkManager Applet
+GenericName=NetworkManager Applet
+Exec=nm-applet
+Icon=nm-applet
+Terminal=false
+Type=Application
+StartupNotify=false
