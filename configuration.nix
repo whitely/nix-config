@@ -17,16 +17,11 @@ let
     Value = "";
     Status = "locked";
   };
-  gpuIDs = [
-    "1002:744c" # 7900 XTX
-  ];
-in { pkgs, lib, config, ... }: {
-  options.vfio.enable = with lib;
-    mkEnableOption "Configure the machine for VFIO";
-
+in {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./iommu.nix
       <home-manager/nixos>
     ];
 
@@ -50,32 +45,6 @@ in { pkgs, lib, config, ... }: {
 
   # https://astrid.tech/2022/09/22/0/nixos-gpu-vfio/
   boot.kernelParams = [ "amd_iommu=on" ];
-
-  config = let cfg = config.vfio;
-  in {
-    boot = {
-      initrd.kernelModules = [
-        "vfio_pci"
-        "vfio"
-        "vfio_iommu_type1"
-        "vfio_virqfd"
-
-        # Keep this after the VFIO modules: order matters
-        "amdgpu"
-      ];
-
-      kernelParams = [
-        # enable IOMMU
-        "amd_iommu=on"
-      ] ++ lib.optional cfg.enable
-        # isolate the GPU
-        ("vfio-pci.ids=" + lib.concatStringsSep "," gpuIDs);
-    };
-
-    hardware.opengl.enable = true;
-    virtualisation.spiceUSBRedirection.enable = true;
-  };
-
   specialisation."VFIO".configuration = {
     system.nixos.tags = [ "with-vfio" ];
     vfio.enable = true;
