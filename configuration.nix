@@ -488,6 +488,10 @@ in {
 
       gimp-with-plugins
       wofi-emoji bemoji
+
+      chromium
+
+      ventoy-full
     ];
 
     home.sessionVariables = {
