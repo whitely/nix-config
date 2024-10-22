@@ -9,14 +9,32 @@
   <memory unit="KiB">23964672</memory>
   <currentMemory unit="KiB">23964672</currentMemory>
   <vcpu placement="static">4</vcpu>
+  <sysinfo type="smbios">
+    <bios>
+      <entry name="vendor">American Megatrends International, LLC.</entry>
+      <entry name="version">F31b</entry>
+      <entry name="date">07/23/2024</entry>
+      <entry name="release">5.35</entry>
+    </bios>
+    <system>
+      <entry name="manufacturer">Gigabyte Technology Co., Ltd.</entry>
+      <entry name="product">B650 AORUS ELITE AX V2</entry>
+      <entry name="version">x.x</entry>
+      <entry name="serial">Default string</entry>
+      <entry name="uuid">efb57016-134e-4448-873c-d83e99f50bc9</entry>
+      <entry name="sku">Default string</entry>
+      <entry name="family">B650 MB</entry>
+    </system>
+  </sysinfo>
   <os>
     <type arch="x86_64" machine="pc-q35-8.2">hvm</type>
     <boot dev="hd"/>
+    <smbios mode="sysinfo"/>
   </os>
   <features>
     <acpi/>
     <apic/>
-    <hyperv mode="custom">
+    <hyperv mode="passthrough">
       <relaxed state="on"/>
       <vapic state="on"/>
       <spinlocks state="on" retries="8191"/>
