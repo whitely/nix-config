@@ -472,6 +472,7 @@ in {
       ".config/yakuakerc".source = dotfiles/yakuakerc;
 
       ".local/bin/ls-iommu".source = dotfiles/ls-iommu;
+      ".local/bin/ls-usb".source = dotfiles/ls-usb;
 
       ".local/share/Steam/steamapps/compatdata/359320/pfx/drive_c/users/steamuser/Local Settings/Application Data/Frontier Developments/Elite Dangerous/Options/Bindings/Custom.4.1.binds".source = dotfiles/Elite_Dangerous_4.1;
 
@@ -497,6 +498,8 @@ in {
       chromium
 
       ventoy-full
+
+      usbutils pciutils
     ];
 
     home.sessionVariables = {
