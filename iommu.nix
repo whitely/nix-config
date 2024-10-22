@@ -1,6 +1,7 @@
 let
   gpuIDs = [
-    "1002:744c" # 7900 XTX
+    "1002:744c" # 7900 XTX Video
+    "1002:ab30" # 7900 XTX Audio
   ];
 in { pkgs, lib, config, ... }: {
   options.vfio.enable = with lib;
