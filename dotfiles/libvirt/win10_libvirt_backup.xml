@@ -181,8 +181,11 @@
       <target type="virtio" name="com.redhat.spice.0"/>
       <address type="virtio-serial" controller="0" bus="0" port="1"/>
     </channel>
-    <input type="tablet" bus="usb">
-      <address type="usb" bus="0" port="1"/>
+    <input type="evdev">
+      <source dev="/dev/input/by-id/usb-Logitech_G300s_Optical_Gaming_Mouse-event-mouse"/>
+    </input>
+    <input type="evdev">
+      <source dev="/dev/input/by-id/usb-13ba_Barcode_Reader-event-kbd" grab="all" grabToggle="ctrl-ctrl" repeat="on"/>
     </input>
     <input type="mouse" bus="ps2"/>
     <input type="keyboard" bus="ps2"/>
@@ -209,13 +212,6 @@
         <address domain="0x0000" bus="0x03" slot="0x00" function="0x1"/>
       </source>
       <address type="pci" domain="0x0000" bus="0x06" slot="0x00" function="0x0"/>
-    </hostdev>
-    <hostdev mode="subsystem" type="usb" managed="yes">
-      <source>
-        <vendor id="0x413c"/>
-        <product id="0x301c"/>
-      </source>
-      <address type="usb" bus="0" port="5"/>
     </hostdev>
     <redirdev bus="usb" type="spicevmc">
       <address type="usb" bus="0" port="2"/>
