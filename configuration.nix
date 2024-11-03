@@ -291,6 +291,8 @@ in {
   # In KDE settings, "Legacy X11 App Support" to allow F keys to be read globally
   # Find it: https://github.com/shalva97/kde-configuration-files
 
+  services.hardware.openrgb.enable = true;
+
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
