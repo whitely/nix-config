@@ -96,6 +96,8 @@ in {
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
+  services.gnome.gnome-keyring.enable = true;
+
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
@@ -500,7 +502,7 @@ in {
       gimp-with-plugins
       wofi-emoji bemoji
 
-      chromium
+      chromium libreoffice
 
       ventoy-full
 
@@ -509,6 +511,18 @@ in {
 
     home.sessionVariables = {
       EDITOR = "nvim";
+      DEFAULT_BROWSER = "${pkgs.firefox}/bin/firefox";
+    };
+
+    xdg.mimeApps = {
+      enable = true;
+      defaultApplications = {
+        "text/html" = "firefox.desktop";
+        "x-scheme-handler/http" = "firefox.desktop";
+        "x-scheme-handler/https" = "firefox.desktop";
+        "x-scheme-handler/about" = "firefox.desktop";
+        "x-scheme-handler/unknown" = "firefox.desktop";
+      };
     };
 
     programs.neovim = {
