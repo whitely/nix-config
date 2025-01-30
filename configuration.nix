@@ -85,7 +85,12 @@ in {
 
   # Enable Hyprland
   # https://wiki.hyprland.org/Nix/
-  programs.hyprland.enable = true;
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+    # portalPackage = inputs.xdg-desktop-portal-hyprland.packages."${pkgs.system}".xdg-desktop-portal-hyprland;
+    # https://github.com/NixOS/nixpkgs/issues/277230
+  };
 
   # Configure keymap in X11
   services.xserver = {
@@ -106,6 +111,11 @@ in {
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
+
+    wireplumber = {
+      enable = true;
+      configPackages = [];
+    };
     # If you want to use JACK applications, uncomment this
     #jack.enable = true;
 
@@ -167,7 +177,7 @@ in {
 
     steam-run
     # Links may not open in FF, Krisp won't work, etc.: https://nixos.wiki/wiki/Discord
-    discord vesktop # Screen sharing on Wayland
+    discord vesktop xwaylandvideobridge # Screen sharing on Wayland
     piper libratbag # Gaming mouse config program
     wev xorg.xev # Mouse and keyboard viewers, to see which keycode a button/key is
     mako # notification service for discord
