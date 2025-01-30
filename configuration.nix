@@ -192,6 +192,7 @@ in {
     virt-manager virt-viewer
     spice spice-protocol spice-gtk
     samba4Full
+    libguestfs guestfs-tools ncdu
 
     pciutils # How I'm getting the lspci manpage
   ];
