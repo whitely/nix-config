@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ./modules/home/firefox.nix
     ./modules/home/fish.nix
   ];
 
