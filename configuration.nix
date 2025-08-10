@@ -9,7 +9,8 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
 
-      ./modules/home/firefox.nix
+      ./modules/system/firefox.nix
+      ./modules/system/fish.nix
     ];
 
   # Bootloader.
