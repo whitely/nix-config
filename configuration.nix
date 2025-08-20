@@ -195,7 +195,42 @@ in {
     libguestfs guestfs-tools ncdu
 
     pciutils # How I'm getting the lspci manpage
+    coolercontrol.coolercontrol-gui coolercontrol.coolercontrold coolercontrol.coolercontrol-ui-data coolercontrol.coolercontrol-liqctld
+
+    gnome-network-displays d-spy door-knocker
+    xdg-desktop-portal-gtk xdg-desktop-portal-hyprland xdg-desktop-portal-gnome xdg-desktop-portal-wlr
   ];
+
+  xdg.portal = {
+    enable = true;
+
+    xdgOpenUsePortal = true;
+    # gtkUsePortal = true;
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gtk
+      pkgs.xdg-desktop-portal-gnome
+      pkgs.xdg-desktop-portal-wlr
+      pkgs.xdg-desktop-portal-hyprland
+    ];
+
+    config.common.default = "*";
+  };
+  networking.firewall = {
+    allowedTCPPorts = [7236 7250];
+    allowedUDPPorts = [7236 5353];
+  };
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+    publish = {
+        enable = true;
+        userServices = true;
+        addresses = true;
+    };
+  };
+  # Does this link in the readme matter? https://gitlab.gnome.org/GNOME/gnome-network-displays
+  # NetworkManager only support P2P operation together with wpa_supplicant.
 
   # Fish!
   programs.fish.enable = true;
@@ -305,6 +340,7 @@ in {
   # Find it: https://github.com/shalva97/kde-configuration-files
 
   services.hardware.openrgb.enable = true;
+  # services.hardware.sensors.enable = true; # ChatGPT suggested this to me but it doesn't work
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
