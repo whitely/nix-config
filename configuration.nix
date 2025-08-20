@@ -271,7 +271,7 @@ in {
           installation_mode = "force_installed";
         };
         "{d634138d-c276-4fc8-924b-40a0ea21d284}" = {
-          install_url = "https://addons.mozilla.org/firefox/downloads/file/4307081/1password_x_password_manager-2.25.1.xpi";
+          install_url = "https://addons.mozilla.org/firefox/downloads/file/4546733/1password_x_password_manager-8.11.4.27.xpi";
           installation_mode = "force_installed";
         };
         "jid1-MnnxcxisBPnSXQ@jetpack" = {
