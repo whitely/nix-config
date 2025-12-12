@@ -133,12 +133,12 @@ in {
   environment.systemPackages = with pkgs; [
     wget vim git file
     gparted
-    kate yakuake tmux
+    kdePackages.kate kdePackages.yakuake tmux
     p7zip zip
 
     kitty wofi
 
-    plasma-nm connman networkmanagerapplet
+    kdePackages.plasma-nm connman networkmanagerapplet
 
     tmux grc
     jq ripgrep fd tldr fzf
@@ -170,14 +170,14 @@ in {
 
     lm_sensors htop
     dmidecode neofetch
-    glxinfo vulkan-tools
+    mesa-demos vulkan-tools
 
-    _1password-gui _1password
+    _1password-gui _1password-cli
     nextcloud-client
 
     steam-run
     # Links may not open in FF, Krisp won't work, etc.: https://nixos.wiki/wiki/Discord
-    discord vesktop xwaylandvideobridge # Screen sharing on Wayland
+    discord # vesktop xwaylandvideobridge # Screen sharing on Wayland
     piper libratbag # Gaming mouse config program
     wev xorg.xev # Mouse and keyboard viewers, to see which keycode a button/key is
     mako # notification service for discord
@@ -195,7 +195,7 @@ in {
     libguestfs guestfs-tools ncdu
 
     pciutils # How I'm getting the lspci manpage
-    coolercontrol.coolercontrol-gui coolercontrol.coolercontrold coolercontrol.coolercontrol-ui-data coolercontrol.coolercontrol-liqctld
+    coolercontrol.coolercontrol-gui coolercontrol.coolercontrold coolercontrol.coolercontrol-ui-data # coolercontrol.coolercontrol-liqctld
 
     gnome-network-displays d-spy door-knocker
     xdg-desktop-portal-gtk xdg-desktop-portal-hyprland xdg-desktop-portal-gnome xdg-desktop-portal-wlr
@@ -551,7 +551,8 @@ in {
 
       chromium libreoffice
 
-      ventoy-full
+      # Discord canary has screenshare working anyway, installed via flatpak
+      #       ventoy-full
 
       usbutils pciutils
     ];
@@ -668,13 +669,14 @@ in {
       package = pkgs.qemu_kvm;
       runAsRoot = true;
       swtpm.enable = true;
-      ovmf = {
-        enable = true;
-        packages = [(pkgs.OVMF.override {
-          secureBoot = true;
-          tpmSupport = true;
-        }).fd];
-      };
+  # Removing for switch to unstable
+      #       ovmf = {
+#         enable = true;
+#         packages = [(pkgs.OVMF.override {
+#           secureBoot = true;
+#           tpmSupport = true;
+#         }).fd];
+#       };
     };
   };
   virtualisation.spiceUSBRedirection.enable = true;
@@ -684,8 +686,9 @@ in {
     extraPackages = [ pkgs.mesa.drivers ];
 
     ## radv: an open-source Vulkan driver from freedesktop
-    driSupport = true;
-    driSupport32Bit = true;
+    # Commenting out switching to unstable
+    #     driSupport = true;
+#     driSupport32Bit = true;
 
     ## amdvlk: an open-source Vulkan driver from AMD
 #     extraPackages = [ pkgs.amdvlk ];
