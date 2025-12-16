@@ -575,6 +575,8 @@ in {
       NIX_XDG_DESKTOP_PORTAL_DIR = "/run/current-system/sw/share/xdg-desktop-portal/portals";
     };
 
+    xdg.portal.enable = false;
+
     xdg.mimeApps = {
       enable = true;
       defaultApplications = {
