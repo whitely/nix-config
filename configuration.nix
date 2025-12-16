@@ -88,8 +88,7 @@ in {
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
-    # portalPackage = inputs.xdg-desktop-portal-hyprland.packages."${pkgs.system}".xdg-desktop-portal-hyprland;
-    # https://github.com/NixOS/nixpkgs/issues/277230
+    portalPackage = pkgs.xdg-desktop-portal-hyprland;
   };
 
   # Configure keymap in X11
@@ -210,24 +209,27 @@ in {
 
   xdg.portal = {
     enable = true;
-
     xdgOpenUsePortal = true;
-    # gtkUsePortal = true;
+
     extraPortals = [
       pkgs.kdePackages.xdg-desktop-portal-kde
-#       pkgs.xdg-desktop-portal-gtk
-#       pkgs.xdg-desktop-portal-gnome
-#       pkgs.xdg-desktop-portal-wlr
-#       pkgs.xdg-desktop-portal-hyprland
+      pkgs.xdg-desktop-portal-hyprland  # Add it here so it's available
     ];
 
     # https://claude.ai/chat/bc476b69-74e9-44ab-8666-4ab5fcc6f6bf
     # config.common.default = "*"; # this caused ~/.nix-profile to include xdg-desktop-portal-hyprland, which meant our KDE fixes weren't working
-    config.common = {
-      default = "kde";
-      "org.freedesktop.impl.portal.Secret" = "kwallet";
+    config = {
+      common = {
+        default = "kde";
+        "org.freedesktop.impl.portal.Secret" = "kwallet";
+      };
+      # Configure hyprland to use its own portal when in that environment
+      hyprland = {
+        default = ["hyprland" "kde"];
+      };
     };
   };
+
   networking.firewall = {
     allowedTCPPorts = [7236 7250];
     allowedUDPPorts = [7236 5353];
@@ -575,7 +577,7 @@ in {
       NIX_XDG_DESKTOP_PORTAL_DIR = "/run/current-system/sw/share/xdg-desktop-portal/portals";
     };
 
-    xdg.portal.enable = false;
+    xdg.portal.enable = lib.mkForce false;
 
     xdg.mimeApps = {
       enable = true;
