@@ -572,6 +572,7 @@ in {
     home.sessionVariables = {
       EDITOR = "nvim";
       DEFAULT_BROWSER = "${pkgs.firefox}/bin/firefox";
+      NIX_XDG_DESKTOP_PORTAL_DIR = "/run/current-system/sw/share/xdg-desktop-portal/portals";
     };
 
     xdg.mimeApps = {
