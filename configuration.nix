@@ -366,6 +366,14 @@ in {
   # Compromise for those juicy frames
   nixpkgs.config.allowUnfree = true;
 
+  services.ollama = {
+    enable = true;
+    # Optional: preload models, see https://ollama.com/library
+    loadModels = [ "llama3.2:3b" "deepseek-r1:1.5b"];
+    package = pkgs.ollama-rocm; # pkgs.ollama-vulkan;
+  };
+  services.open-webui.enable = true;
+
   # Enable VirtualBox
 #   virtualisation.virtualbox.host.enable = true;
 #   # Disable hardening to allow 3D acceleration
