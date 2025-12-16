@@ -198,8 +198,15 @@ in {
     coolercontrol.coolercontrol-gui coolercontrol.coolercontrold coolercontrol.coolercontrol-ui-data # coolercontrol.coolercontrol-liqctld
 
     gnome-network-displays d-spy door-knocker
-    xdg-desktop-portal-gtk xdg-desktop-portal-hyprland xdg-desktop-portal-gnome xdg-desktop-portal-wlr
+    kdePackages.kwin
+    kdePackages.kpipewire
+    discord-canary
   ];
+
+  environment.sessionVariables = {
+    # For some reason this keeps getting set to `/home/ben/.nix-profile/share/xdg-desktop-portal/portals`, which contains only a Hyprland portal, even though I removed that from home-manager, so just force it to be what we want here.
+    NIX_XDG_DESKTOP_PORTAL_DIR = "/run/current-system/sw/share/xdg-desktop-portal/portals";
+  };
 
   xdg.portal = {
     enable = true;
@@ -207,13 +214,19 @@ in {
     xdgOpenUsePortal = true;
     # gtkUsePortal = true;
     extraPortals = [
-      pkgs.xdg-desktop-portal-gtk
-      pkgs.xdg-desktop-portal-gnome
-      pkgs.xdg-desktop-portal-wlr
-      pkgs.xdg-desktop-portal-hyprland
+      pkgs.kdePackages.xdg-desktop-portal-kde
+#       pkgs.xdg-desktop-portal-gtk
+#       pkgs.xdg-desktop-portal-gnome
+#       pkgs.xdg-desktop-portal-wlr
+#       pkgs.xdg-desktop-portal-hyprland
     ];
 
-    config.common.default = "*";
+    # https://claude.ai/chat/bc476b69-74e9-44ab-8666-4ab5fcc6f6bf
+    # config.common.default = "*"; # this caused ~/.nix-profile to include xdg-desktop-portal-hyprland, which meant our KDE fixes weren't working
+    config.common = {
+      default = "kde";
+      "org.freedesktop.impl.portal.Secret" = "kwallet";
+    };
   };
   networking.firewall = {
     allowedTCPPorts = [7236 7250];
@@ -543,14 +556,13 @@ in {
       # joystickwake # doesn't seem to work; just use `gamemoderun %command%` in steam options for E:D and other joystick apps to prevent sleep
 
       hyprpaper waybar font-awesome font-awesome_5 playerctl
-      xdg-desktop-portal-hyprland grim slurp swappy grimblast
+      grim slurp swappy grimblast
       wl-clipboard wl-screenrec wf-recorder ffmpeg-full
 
       gimp-with-plugins
       wofi-emoji bemoji
 
       chromium libreoffice
-
       # Discord canary has screenshare working anyway, installed via flatpak
       #       ventoy-full
 
