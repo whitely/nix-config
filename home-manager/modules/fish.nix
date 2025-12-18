@@ -1,5 +1,8 @@
 { pkgs, lib, ... }:
 
+let
+  dotfiles = ../../dotfiles;
+in
 {
   programs.fish = {
     enable = true;
@@ -69,4 +72,18 @@
       record = ''wf-recorder -g "$(slurp)" -f "$argv[1]"'';
     };
   };
+
+  # Tmux configuration
+  home.file.".tmux.conf".source = "${dotfiles}/tmuxconf";
+
+  # Utility scripts for IOMMU and USB devices
+  home.file.".local/bin/ls-iommu".source = "${dotfiles}/ls-iommu";
+  home.file.".local/bin/ls-usb".source = "${dotfiles}/ls-usb";
+
+  # Fish/Shell-related packages
+  home.packages = with pkgs; [
+    tmux
+    grc
+    fishPlugins.fzf
+  ];
 }

@@ -1,9 +1,6 @@
 { pkgs, lib, ... }:
 
 {
-  # Disable XDG portal in home-manager (system-level portal is used instead)
-  xdg.portal.enable = lib.mkForce false;
-
   # MIME type associations
   xdg.mimeApps = {
     enable = true;

@@ -4,8 +4,8 @@
   imports = [
     ../../modules/fish.nix
     ../../modules/hyprland.nix
-    ../../modules/neovim.nix
     ../../modules/dotfiles.nix
+    ../../modules/virt-manager.nix
     ../../modules/xdg.nix
     ./packages.nix
   ];

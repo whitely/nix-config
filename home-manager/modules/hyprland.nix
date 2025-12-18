@@ -1,6 +1,14 @@
 { pkgs, lib, ... }:
 
+let
+  dotfiles = ../../dotfiles;
+in
 {
+  # Disable XDG portal in home-manager (system-level portal is used instead)
+  # This caused lots of problems and I eventually tracked it down via AI debugging:
+  # https://claude.ai/chat/bc476b69-74e9-44ab-8666-4ab5fcc6f6bf
+  xdg.portal.enable = lib.mkForce false;
+
   wayland.windowManager.hyprland = {
     enable = true;
 
@@ -44,4 +52,50 @@
     #   inputs.hyprland-plugins.packages.${pkgs.stdenv.hostPlatform.system}.hyprbars
     # ];
   };
+
+  # Hyprland-related dotfiles
+  home.file = {
+    ".config/hypr/basic.conf".source = "${dotfiles}/hyprland_basic.conf";
+
+    ".config/waybar" = {
+      source = "${dotfiles}/waybar";
+      recursive = true;
+    };
+
+    ".config/hypr/screenshots" = {
+      source = "${dotfiles}/hypr/screenshots";
+      recursive = true;
+    };
+
+    # Application launcher
+    ".local/share/applications/Bemoji.desktop".source = "${dotfiles}/Bemoji.desktop";
+
+    ".config/hypr/hypr_gamemode.sh".source = "${dotfiles}/hypr/hypr_gamemode.sh";
+    ".config/wofi/style.css".source = "${dotfiles}/hypr/wofi.css";
+    ".config/hypr/hyprpaper.conf".source = "${dotfiles}/hypr/hyprpaper.conf";
+  };
+
+  # Hyprland-related packages
+  home.packages = with pkgs; [
+    # Wayland utilities
+    hyprpaper
+    waybar
+    font-awesome
+    font-awesome_5
+    playerctl
+
+    # Screenshot and recording tools
+    grim
+    slurp
+    swappy
+    grimblast
+    wl-clipboard
+    wl-screenrec
+    wf-recorder
+    ffmpeg-full
+
+    # Emoji picker
+    wofi-emoji
+    bemoji
+  ];
 }
