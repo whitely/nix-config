@@ -71,4 +71,41 @@ in
       };
     };
   };
+
+  # 1Password password manager
+  programs._1password.enable = true;
+  programs._1password-gui = {
+    enable = true;
+    # Certain features, including CLI integration and system authentication support,
+    # require enabling PolKit integration on some desktop environments (e.g. Plasma).
+    polkitPolicyOwners = [ "ben" ];
+  };
+
+  # Applications and utilities
+  environment.systemPackages = with pkgs; [
+    # Security
+    _1password-gui
+    _1password-cli
+    veracrypt # Disk encryption utility
+
+    # Productivity
+    nextcloud-client
+    signal-desktop
+    weechat
+    deluge # Torrent client
+
+    # File management and compression
+    p7zip
+    zip
+    gparted # Partition editor
+
+    # System information and monitoring
+    lm_sensors
+    htop
+    dmidecode
+    neofetch
+    mesa-demos      # OpenGL utilities
+    vulkan-tools    # Vulkan utilities
+    pciutils        # lspci and PCI utilities
+  ];
 }

@@ -1,8 +1,29 @@
 { config, lib, pkgs, ... }:
 
 {
-  # Development tools and utilities
+  # Programming languages and compilers
+  programs.java.enable = true;
+
+  # Enable GPG agent with SSH support
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+  };
+
+  # Enable MTR (network diagnostic tool)
+  programs.mtr.enable = true;
+
+  # Development tools, languages, and utilities
   environment.systemPackages = with pkgs; [
+    # Editors
+    vim
+    kdePackages.kate
+
+    # Languages and compilers
+    python3
+    gcc-unwrapped
+    gnumake
+
     # Version control
     git
 
@@ -25,13 +46,4 @@
     parted
     busybox
   ];
-
-  # Enable GPG agent with SSH support
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
-  };
-
-  # Enable MTR (network diagnostic tool)
-  programs.mtr.enable = true;
 }

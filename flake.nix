@@ -23,6 +23,8 @@
         ./modules/core/boot.nix
         ./modules/core/networking.nix
         ./modules/core/locale.nix
+        ./modules/core/cli.nix
+        ./modules/core/services.nix
 
         # Hardware modules
         ./modules/hardware/amd-gpu.nix
@@ -31,41 +33,32 @@
         ./modules/hardware/peripherals.nix
 
         # Desktop modules
-        ./modules/desktop/plasma.nix
+        ./modules/desktop/desktop.nix
         ./modules/desktop/hyprland.nix
         ./modules/desktop/xdg-portals.nix
-        ./modules/desktop/utilities.nix
+        ./modules/desktop/screenshare.nix
 
         # Services
-        ./modules/services/printing.nix
-        ./modules/services/ssh.nix
         ./modules/services/avahi.nix
         ./modules/services/flatpak.nix
-        ./modules/services/gnome-keyring.nix
 
         # Virtualization
-        ./modules/virtualization/libvirt.nix
+        ./modules/virtualization/virtualization.nix
         ./modules/virtualization/vfio.nix
 
         # Gaming
-        ./modules/gaming/steam.nix
-        ./modules/gaming/emulators.nix
-        ./modules/gaming/gaming-tools.nix
+        ./modules/gaming/gaming.nix
 
         # Development
-        ./modules/development/editors.nix
-        ./modules/development/languages.nix
-        ./modules/development/tools.nix
+        ./modules/development/development.nix
         ./modules/development/shell.nix
 
         # AI
         ./modules/ai/ollama.nix
 
         # Applications
-        ./modules/applications/browsers.nix
+        ./modules/applications/applications.nix
         ./modules/applications/multimedia.nix
-        ./modules/applications/productivity.nix
-        ./modules/applications/security.nix
 
         # Home Manager
         home-manager.nixosModules.home-manager

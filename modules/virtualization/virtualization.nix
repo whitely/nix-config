@@ -28,4 +28,22 @@
 
   # Enable SPICE USB redirection
   virtualisation.spiceUSBRedirection.enable = true;
+
+  # Virtualization-related packages
+  environment.systemPackages = with pkgs; [
+    # VM management
+    virt-manager
+    virt-viewer
+
+    # SPICE for VMs
+    spice
+    spice-protocol
+    spice-gtk
+
+    # File sharing and utilities
+    samba4Full
+    libguestfs
+    guestfs-tools
+    ncdu # Disk usage analyzer
+  ];
 }
