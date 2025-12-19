@@ -19,6 +19,11 @@
           # Host-specific configuration
           ./hosts/agave-nix
 
+          # Virtualization - imported early to ensure correct initrd module load order
+          # VFIO modules must load before amdgpu (see vfio.nix:18)
+          ./modules/virtualization/virtualization.nix
+          ./modules/virtualization/vfio.nix
+
           # Core modules
           ./modules/core/nix.nix
           ./modules/core/boot.nix
@@ -42,10 +47,6 @@
           # Services
           ./modules/services/avahi.nix
           ./modules/services/flatpak.nix
-
-          # Virtualization
-          ./modules/virtualization/virtualization.nix
-          ./modules/virtualization/vfio.nix
 
           # Gaming
           ./modules/gaming/gaming.nix
