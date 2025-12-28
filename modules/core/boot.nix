@@ -12,6 +12,9 @@
   boot.initrd.kernelModules = [
     "sata_nv"
     "ext4"
+  ] ++ lib.optionals (!config.vfio.enable) [
+    # Only load amdgpu in initrd when NOT using VFIO
+    # (vfio.nix loads it after VFIO modules when VFIO is enabled)
     "amdgpu"
   ];
 

@@ -7,8 +7,7 @@ in { pkgs, lib, config, ... }: {
   options.vfio.enable = with lib;
     mkEnableOption "Configure the machine for VFIO";
 
-  config = let cfg = config.vfio;
-  in {
+  config = lib.mkIf config.vfio.enable {
     boot = {
       initrd.kernelModules = [
         "vfio_pci"
@@ -22,9 +21,9 @@ in { pkgs, lib, config, ... }: {
       kernelParams = [
         # enable IOMMU
         "amd_iommu=on"
-      ] ++ lib.optional cfg.enable
         # isolate the GPU
-        ("vfio-pci.ids=" + lib.concatStringsSep "," gpuIDs);
+        ("vfio-pci.ids=" + lib.concatStringsSep "," gpuIDs)
+      ];
     };
 
     hardware.opengl.enable = true;
