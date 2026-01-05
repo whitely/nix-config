@@ -19,6 +19,8 @@
     ];
   };
 
+  services.xserver.videoDrivers = [ "amdgpu" ];
+
   # The state version determines the NixOS release from which the default
   # settings for stateful data were taken. Don't change this unless upgrading.
   system.stateVersion = "24.05";

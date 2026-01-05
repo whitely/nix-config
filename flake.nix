@@ -8,6 +8,9 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # claude = ""
+    #  nix run github:sadjow/claude-code-nix --extra-experimental-features nix-command --extra-experimental-features flakes
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs: {
@@ -16,51 +19,35 @@
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
-          # Host-specific configuration
-          ./hosts/agave-nix
-
           # Virtualization - imported early to ensure correct initrd module load order
           # VFIO modules must load before amdgpu (see vfio.nix:18)
           ./modules/virtualization/virtualization.nix
           ./modules/virtualization/vfio.nix
 
           # Core modules
-          ./modules/core/nix.nix
-          ./modules/core/boot.nix
-          ./modules/core/networking.nix
-          ./modules/core/locale.nix
-          ./modules/core/cli.nix
-          ./modules/core/services.nix
-
-          # Hardware modules
-          ./modules/hardware/amd-gpu.nix
-          ./modules/hardware/audio.nix
-          ./modules/hardware/opengl.nix
-          ./modules/hardware/peripherals.nix
+          ./modules/system/audio.nix
+          ./modules/system/boot.nix
+          ./modules/system/cli.nix
+          ./modules/system/locale.nix
+          ./modules/system/nix.nix
+          ./modules/system/services.nix
 
           # Desktop modules
           ./modules/desktop/desktop.nix
           ./modules/desktop/hyprland.nix
-          ./modules/desktop/xdg-portals.nix
           ./modules/desktop/screenshare.nix
-
-          # Services
-          ./modules/services/avahi.nix
-          ./modules/services/flatpak.nix
-
-          # Gaming
-          ./modules/gaming/gaming.nix
-
-          # Development
-          ./modules/development/development.nix
-          ./modules/development/shell.nix
-
-          # AI
-          ./modules/ai/ollama.nix
+          ./modules/desktop/xdg-portals.nix
 
           # Applications
+          ./modules/applications/appcompat.nix
           ./modules/applications/applications.nix
+          ./modules/applications/development.nix
+          ./modules/applications/gaming.nix
           ./modules/applications/multimedia.nix
+          ./modules/applications/ollama.nix
+
+          # Host-specific configuration
+          ./hosts/agave-nix
 
           # Home Manager
           home-manager.nixosModules.home-manager
