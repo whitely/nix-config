@@ -9,11 +9,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # claude = ""
-    #  nix run github:sadjow/claude-code-nix --extra-experimental-features nix-command --extra-experimental-features flakes
+    claude-code.url = "github:sadjow/claude-code-nix";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, claude-code, ... }@inputs: {
     nixosConfigurations = {
       agave-nix = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -54,6 +53,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.backupFileExtension = "backup";
+            home-manager.extraSpecialArgs = { inherit inputs; };
             home-manager.users.ben = import ./home-manager/profiles/ben;
           }
         ];
@@ -109,6 +109,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.backupFileExtension = "backup";
+            home-manager.extraSpecialArgs = { inherit inputs; };
             home-manager.users.ben = import ./home-manager/profiles/shrub-nix;
           }
         ];
