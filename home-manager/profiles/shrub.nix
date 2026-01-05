@@ -1,6 +1,17 @@
-{ pkgs, inputs, ... }:
+{ pkgs, lib, inputs, ... }:
 
 {
+  imports = [
+    ../../modules/fish.nix
+    ../../modules/hyprland.nix
+    ../../modules/dotfiles.nix
+    # Note: virt-manager.nix excluded for shrub-nix
+    ../../modules/xdg.nix
+  ];
+
+  # Enable bash (required)
+  programs.bash.enable = true;
+
   home.packages = with pkgs; [
     # Development tools
     direnv
@@ -22,4 +33,7 @@
     usbutils
     pciutils
   ];
+
+  # Home Manager state version
+  home.stateVersion = "24.05";
 }

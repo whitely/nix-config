@@ -54,7 +54,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.backupFileExtension = "backup";
             home-manager.extraSpecialArgs = { inherit inputs; };
-            home-manager.users.ben = import ./home-manager/profiles/ben;
+            home-manager.users.ben = import ./home-manager/profiles/agave.nix;
           }
         ];
       };
@@ -110,7 +110,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.backupFileExtension = "backup";
             home-manager.extraSpecialArgs = { inherit inputs; };
-            home-manager.users.ben = import ./home-manager/profiles/shrub-nix;
+            home-manager.users.ben = import ./home-manager/profiles/shrub.nix;
           }
         ];
         ### Claude rewrite stopping here
