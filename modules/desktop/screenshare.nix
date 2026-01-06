@@ -1,10 +1,16 @@
 { config, lib, pkgs, ... }:
 
 {
-  # Firewall configuration for Avahi/Miracast/Screensharing
+  # Firewall configuration for Avahi/Miracast/Screensharing/Sunshine
   networking.firewall = {
-    allowedTCPPorts = [ 7236 7250 ];
-    allowedUDPPorts = [ 7236 5353 ];
+    allowedTCPPorts = [
+      7236 7250           # Miracast/gnome-network-displays
+      47984 47989 48010   # Sunshine streaming
+    ];
+    allowedUDPPorts = [
+      7236 5353           # Miracast/mDNS
+      47998 47999 48000 48010  # Sunshine streaming
+    ];
   };
 
   # Screenshare and network display utilities
@@ -24,6 +30,13 @@
       userServices = true;
       addresses = true;
     };
+  };
+
+  # Sunshine game streaming server (for Steam Deck, mobile devices, etc.)
+  services.sunshine = {
+    enable = true;
+    autoStart = true;
+    capSysAdmin = true;  # Required for proper screen capture and performance
   };
 
   # Does this link in the readme matter? https://gitlab.gnome.org/GNOME/gnome-network-displays
