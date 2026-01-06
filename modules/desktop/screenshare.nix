@@ -18,6 +18,7 @@
     gnome-network-displays  # Miracast/wireless display
     d-spy                   # D-Bus inspector
     door-knocker            # Port knocking utility
+    iw                      # Wireless configuration tool (needed for P2P debugging)
   ];
 
   # Enable Avahi mDNS/DNS-SD for local network service discovery
@@ -33,6 +34,7 @@
   };
 
   # Sunshine game streaming server (for Steam Deck, mobile devices, etc.)
+  # Access management console on https://localhost:47990 the first time once service started
   services.sunshine = {
     enable = true;
     autoStart = true;
