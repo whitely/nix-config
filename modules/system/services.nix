@@ -35,16 +35,4 @@
     # extraPackages = [ pkgs.amdvlk ];
     # extraPackages32 = [ pkgs.driversi686Linux.amdvlk ];
   };
-
-  # Enable Avahi mDNS/DNS-SD for local network service discovery
-  services.avahi = {
-    enable = true;
-    nssmdns4 = true;
-    openFirewall = true;
-    publish = {
-      enable = true;
-      userServices = true;
-      addresses = true;
-    };
-  };
 }
