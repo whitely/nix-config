@@ -34,6 +34,8 @@
     pciutils
   ];
 
+  programs.fish.functions.mouse = ''set -l devname (ratbagctl list | grep "G502" | cut -d':' -f1); echo "dpi $(ratbagctl $devname dpi get) rate $(ratbagctl $devname rate get)"; ratbagctl $devname dpi set 200; ratbagctl $devname rate set 500'';
+
   # Home Manager state version
   home.stateVersion = "24.05";
 }
