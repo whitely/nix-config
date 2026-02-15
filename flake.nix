@@ -68,41 +68,26 @@
           ./hosts/shrub-nix
 
           # Core modules
-          ./modules/core/nix.nix
-          ./modules/core/boot.nix
-          ./modules/core/networking.nix
-          ./modules/core/locale.nix
-          ./modules/core/cli.nix
-          ./modules/core/services.nix
-
-          # Hardware modules (excluding peripherals)
-          ./modules/hardware/amd-gpu.nix
-          ./modules/hardware/audio.nix
-          ./modules/hardware/opengl.nix
+          ./modules/system/audio.nix
+          ./modules/system/boot.nix
+          ./modules/system/cli.nix
+          ./modules/system/locale.nix
+          ./modules/system/nix.nix
+          ./modules/system/services.nix
 
           # Desktop modules
           ./modules/desktop/desktop.nix
           ./modules/desktop/hyprland.nix
-          ./modules/desktop/xdg-portals.nix
           ./modules/desktop/screenshare.nix
-
-          # Services
-          ./modules/services/avahi.nix
-          ./modules/services/flatpak.nix
-
-          # Virtualization (VFIO only, no virt-manager)
-          ./modules/virtualization/vfio.nix
-
-          # Gaming
-          ./modules/gaming/gaming.nix
-
-          # Development
-          ./modules/development/development.nix
-          ./modules/development/shell.nix
+          ./modules/desktop/xdg-portals.nix
 
           # Applications
+          ./modules/applications/appcompat.nix
           ./modules/applications/applications.nix
+          ./modules/applications/development.nix
+          ./modules/applications/gaming.nix
           ./modules/applications/multimedia.nix
+          ./modules/applications/ollama.nix
 
           # Home Manager
           home-manager.nixosModules.home-manager

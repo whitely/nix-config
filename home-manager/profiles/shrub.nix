@@ -2,11 +2,11 @@
 
 {
   imports = [
-    ../../modules/fish.nix
-    ../../modules/hyprland.nix
-    ../../modules/dotfiles.nix
+    ../modules/fish.nix
+    ../modules/hyprland.nix
+    ../modules/dotfiles.nix
     # Note: virt-manager.nix excluded for shrub-nix
-    ../../modules/xdg.nix
+    ../modules/xdg.nix
   ];
 
   # Enable bash (required)
