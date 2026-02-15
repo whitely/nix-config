@@ -8,6 +8,9 @@
   # Hostname
   networking.hostName = "shrub-nix";
 
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
   # Define user account
   users.users.ben = {
     isNormalUser = true;

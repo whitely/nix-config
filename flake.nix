@@ -69,7 +69,7 @@
 
           # Core modules
           ./modules/system/audio.nix
-          ./modules/system/boot.nix
+#           ./modules/system/boot.nix # prefer the config in hosts/shrub-nix
           ./modules/system/cli.nix
           ./modules/system/locale.nix
           ./modules/system/nix.nix
