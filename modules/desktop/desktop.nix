@@ -18,7 +18,7 @@
     # Network management
     kdePackages.plasma-nm
     connman
-    networkmanagerapplet
+    # networkmanagerapplet # I was using this for Hyprland, but it resulted in two network management utilities in KDE, which was annoying
 
     # KDE utilities
     kdePackages.kwin
