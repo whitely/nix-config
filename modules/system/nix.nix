@@ -1,7 +1,10 @@
 { config, lib, pkgs, ... }:
 
 {
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings = {
+    experimental-features = [ "nix-command" "flakes" ];
+    trusted-users = [ "root" "ben" ];
+  };
 
   # Compromise for those juicy frames
   nixpkgs.config.allowUnfree = true;
