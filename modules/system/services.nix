@@ -14,10 +14,10 @@
   networking.networkmanager = {
     enable = true;
     # Commenting out because it made wifi flaky
-#     wifi = {
-#       backend = "wpa_supplicant";
-#       powersave = false;  # Disable power saving for better P2P performance
-#     };
+    wifi = {
+      backend = "wpa_supplicant";
+      powersave = false;  # Disable power saving for better P2P performance
+    };
   };
 
   # Additional wpa_supplicant configuration for P2P/Miracast
