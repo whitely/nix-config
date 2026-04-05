@@ -1,9 +1,9 @@
 # Runtime GPU passthrough - unbind/rebind without reboot
-# Works with the Raphael iGPU as primary display, detaches 7900 XTX on demand
+# Stops display manager, detaches 7900 XTX, starts VM
 #
 # Usage:
-#   sudo gpu-vm-start [vm-name]  # Bind GPU, launch VM (default: win10-vfio)
-#   sudo gpu-vm-stop [vm-name]   # Graceful shutdown, return GPU to host
+#   sudo gpu-vm-start [vm-name]  # Stop display, bind GPU, launch VM (default: win10-vfio)
+#   sudo gpu-vm-stop [vm-name]   # Shutdown VM, return GPU, restart display
 #
 # Note: RDNA3 reset support is improved in kernel 6.12+ but not guaranteed.
 # If rebind fails, a reboot will be required.
@@ -20,6 +20,7 @@ let
   defaultVm = "win10-vfio";
   shutdownTimeout = 120;  # seconds to wait for graceful shutdown
   virshUri = "qemu:///system";
+  displayManager = "display-manager";  # systemd service name
 
   # Script to start VM with GPU passthrough
   gpuVmStart = pkgs.writeShellScriptBin "gpu-vm-start" ''
@@ -53,6 +54,10 @@ let
 
     # Bind GPU to vfio-pci if not already
     if [ "$current_driver" != "vfio-pci" ]; then
+      echo "Stopping display manager..."
+      systemctl stop ${displayManager} || true
+      sleep 2
+
       echo "Binding GPU to vfio-pci..."
 
       # Ensure vfio-pci module is loaded
@@ -84,7 +89,8 @@ let
     $VIRSH start "$VM_NAME"
 
     echo "=== VM '$VM_NAME' started ==="
-    echo "To stop: sudo gpu-vm-stop $VM_NAME"
+    echo "Your display will appear on the GPU connected to the VM."
+    echo "To stop: run 'sudo gpu-vm-stop' from TTY (Ctrl+Alt+F2) or SSH"
   '';
 
   # Script to stop VM and return GPU to host
@@ -170,7 +176,7 @@ let
       new_driver=$(basename $(readlink /sys/bus/pci/devices/${gpuPciId}/driver))
       echo "GPU now bound to: $new_driver"
       if [ "$new_driver" = "amdgpu" ]; then
-        echo "=== GPU successfully returned to host ==="
+        echo "GPU successfully returned to host"
       else
         echo "WARNING: GPU bound to unexpected driver. Reboot may be required."
         exit 1
@@ -182,6 +188,12 @@ let
         exit 1
       }
     fi
+
+    # Restart display manager
+    echo "Restarting display manager..."
+    systemctl start ${displayManager}
+
+    echo "=== Done. Desktop session restored ==="
   '';
 
 in {
