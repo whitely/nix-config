@@ -22,6 +22,7 @@
           # VFIO modules must load before amdgpu (see vfio.nix:18)
           ./modules/virtualization/virtualization.nix
           ./modules/virtualization/vfio.nix
+          ./modules/virtualization/vfio-runtime.nix
 
           # Core modules
           ./modules/system/audio.nix
