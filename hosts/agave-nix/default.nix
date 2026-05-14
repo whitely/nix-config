@@ -8,6 +8,14 @@
   # Hostname
   networking.hostName = "agave-nix";
 
+  # This is in an attempt to make BattlEye work on Linux for GTAV Online (private sessions only)
+  # https://steamcommunity.com/sharedfiles/filedetails/?id=3658540317
+  networking.extraHosts = ''
+    0.0.0.0 paradise-s1.battleye.com
+    0.0.0.0 test-s1.battleye.com
+    0.0.0.0 paradiseenhanced-s1.battleye.com
+  '';
+
   # Define user account
   users.users.ben = {
     isNormalUser = true;
