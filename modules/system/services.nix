@@ -20,6 +20,18 @@
     };
   };
 
+  services.tailscale = {
+    enable = true;
+    useRoutingFeatures = "client";
+
+    # If you would like to use a preauthorized key
+    #authKeyFile = "/run/secrets/tailscale_key";
+  };
+  # GUI for Tailscale
+  environment.systemPackages = [
+    pkgs.trayscale
+  ];
+
   # Additional wpa_supplicant configuration for P2P/Miracast
   # This suggested by Claude
   # Commenting out because it made wifi flaky
